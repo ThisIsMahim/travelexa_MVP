@@ -54,6 +54,7 @@ All colors MUST be HSL.
   }
 }
 
+
 @layer base {
   * {
     @apply border-border;
@@ -129,5 +130,23 @@ All colors MUST be HSL.
 
   .smooth-transition {
     transition: var(--transition-smooth);
+  }
+
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  /* Video optimization for smooth playback */
+  video {
+    will-change: opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
   }
 }
