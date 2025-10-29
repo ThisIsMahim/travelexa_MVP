@@ -2,8 +2,10 @@ import { useInViewAnimation } from '@/hooks/useInViewAnimation';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Star, MapPin } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 const HotelShowcase = () => {
+  const { t } = useLanguage();
   const { ref: sectionRef, isVisible: sectionVisible } = useInViewAnimation<HTMLElement>();
   const { ref: cardsRef, isVisible: cardsVisible } = useInViewAnimation<HTMLDivElement>();
 
@@ -41,10 +43,10 @@ const HotelShowcase = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-6xl font-bold mb-4">
-            Discover <span className="text-gradient">Hotels</span>
+            {t('hotel.title')}
           </h2>
           <p className="text-muted-foreground text-lg">
-            Handpicked stays for your perfect getaway
+            {t('hotel.subtitle')}
           </p>
         </div>
 
@@ -85,11 +87,11 @@ const HotelShowcase = () => {
                   </div>
                   <div className="text-right">
                     <p className="text-2xl font-bold text-primary">{hotel.price}</p>
-                    <p className="text-xs text-muted-foreground">per night</p>
+                    <p className="text-xs text-muted-foreground">{t('hotel.pricePerNight')}</p>
                   </div>
                 </div>
                 <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold group-hover:scale-105 smooth-transition glow-effect">
-                  Book Now
+                  {t('hotel.bookNow')}
                 </Button>
               </div>
             </Card>

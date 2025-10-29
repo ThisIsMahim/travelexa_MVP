@@ -1,6 +1,8 @@
 import { Plane, Facebook, Instagram, MessageCircle } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 const Footer = () => {
+  const { t } = useLanguage();
   return (
     <footer className="border-t border-border py-12 px-6">
       <div className="max-w-7xl mx-auto">
@@ -12,7 +14,7 @@ const Footer = () => {
               <span className="text-xl font-bold">Travelexa</span>
             </div>
             <p className="text-muted-foreground mb-4">
-              Your trusted travel partner for seamless flight and hotel bookings worldwide.
+              {t('footer.aboutDesc')}
             </p>
             <div className="flex gap-4">
               <a
@@ -47,26 +49,26 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-bold mb-4">Quick Links</h3>
+            <h3 className="font-bold mb-4">{t('footer.quickLinks')}</h3>
             <ul className="space-y-2">
               <li>
                 <a href="#flights" className="text-muted-foreground hover:text-primary smooth-transition">
-                  Book Flights
+                  {t('nav.flights')}
                 </a>
               </li>
               <li>
                 <a href="#hotels" className="text-muted-foreground hover:text-primary smooth-transition">
-                  Find Hotels
+                  {t('nav.hotels')}
                 </a>
               </li>
               <li>
                 <a href="#about" className="text-muted-foreground hover:text-primary smooth-transition">
-                  About Us
+                  {t('footer.about')}
                 </a>
               </li>
               <li>
                 <a href="#contact" className="text-muted-foreground hover:text-primary smooth-transition">
-                  Contact
+                  {t('nav.contact')}
                 </a>
               </li>
             </ul>
@@ -74,7 +76,7 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h3 className="font-bold mb-4">Contact Us</h3>
+            <h3 className="font-bold mb-4">{t('footer.support')}</h3>
             <ul className="space-y-2 text-muted-foreground">
               <li>
                 <a href="tel:+8801792090069" className="hover:text-primary smooth-transition">
@@ -94,7 +96,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} Travelexa. Travel with Trust. All rights reserved.</p>
+          <p>{t('footer.copyright')}</p>
         </div>
       </div>
     </footer>

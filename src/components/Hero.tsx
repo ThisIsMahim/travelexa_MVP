@@ -3,10 +3,12 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
+  const { t } = useLanguage();
   const heroRef = useRef<HTMLElement>(null);
   const orbRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -86,13 +88,13 @@ const Hero = () => {
           ref={titleRef}
           className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight"
         >
-          Travel with Trust
+          {t('hero.title')}
         </h1>
         <p
           ref={subtitleRef}
           className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto"
         >
-          Explore the world with ease. Book flights and hotels reliably with Travelexa.
+          {t('hero.subtitle')}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -101,7 +103,7 @@ const Hero = () => {
             className="bg-primary hover:bg-primary/90 text-primary-foreground glow-effect hover:scale-105 smooth-transition font-bold"
             onClick={() => document.getElementById('flights')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            Book a Flight
+            {t('hero.cta')}
           </Button>
           <Button 
             size="lg" 
@@ -109,7 +111,7 @@ const Hero = () => {
             className="border-primary/30 hover:bg-primary/10 hover:border-primary hover:scale-105 smooth-transition font-semibold"
             onClick={() => document.getElementById('hotels')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            Explore Hotels
+            {t('hotel.title')}
           </Button>
         </div>
       </div>

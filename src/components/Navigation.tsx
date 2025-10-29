@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Plane } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,11 +19,11 @@ const Navigation = () => {
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'Flights', href: '#flights' },
-    { name: 'Hotels', href: '#hotels' },
-    { name: 'About', href: '#about' },
-    { name: 'Contact', href: '#contact' },
+    { name: t('nav.home'), href: '#home' },
+    { name: t('nav.flights'), href: '#flights' },
+    { name: t('nav.hotels'), href: '#hotels' },
+    { name: t('nav.tours'), href: '#tours' },
+    { name: t('nav.contact'), href: '#contact' },
   ];
 
   return (
@@ -48,12 +51,13 @@ const Navigation = () => {
                 {link.name}
               </a>
             ))}
+            <LanguageSwitcher />
             <Button 
               size="sm" 
               className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold glow-effect hover:scale-105 smooth-transition"
               onClick={() => document.getElementById('flights')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              Book Now
+              {t('common.submit')}
             </Button>
           </div>
 
@@ -85,6 +89,9 @@ const Navigation = () => {
                   {link.name}
                 </a>
               ))}
+              <div className="px-2 py-2">
+                <LanguageSwitcher />
+              </div>
               <Button 
                 className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold w-full"
                 onClick={() => {
@@ -92,7 +99,7 @@ const Navigation = () => {
                   document.getElementById('flights')?.scrollIntoView({ behavior: 'smooth' });
                 }}
               >
-                Book Now
+                {t('common.submit')}
               </Button>
             </div>
           </div>

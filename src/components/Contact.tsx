@@ -4,8 +4,10 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card } from '@/components/ui/card';
 import { Phone, Mail, MapPin } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 const Contact = () => {
+  const { t } = useLanguage();
   const { ref: sectionRef, isVisible: sectionVisible } = useInViewAnimation<HTMLElement>();
 
   return (
@@ -18,10 +20,10 @@ const Contact = () => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-6xl font-bold mb-4">
-            Get in <span className="text-gradient">Touch</span>
+            {t('contact.title')}
           </h2>
           <p className="text-muted-foreground text-lg">
-            We're here to help plan your perfect journey
+            {t('contact.subtitle')}
           </p>
         </div>
 
@@ -34,7 +36,7 @@ const Contact = () => {
                   <Phone className="w-6 h-6 text-primary group-hover:rotate-12 smooth-transition" />
                 </div>
                 <div>
-                  <h3 className="font-bold mb-2">Call or WhatsApp</h3>
+                  <h3 className="font-bold mb-2">{t('contact.phone_label')}</h3>
                   <a
                     href="tel:+8801792090069"
                     className="text-muted-foreground hover:text-primary smooth-transition"
@@ -51,7 +53,7 @@ const Contact = () => {
                   <Mail className="w-6 h-6 text-primary group-hover:rotate-12 smooth-transition" />
                 </div>
                 <div>
-                  <h3 className="font-bold mb-2">Email Us</h3>
+                  <h3 className="font-bold mb-2">{t('contact.email_label')}</h3>
                   <a
                     href="mailto:Travelexasyl@gmail.com"
                     className="text-muted-foreground hover:text-primary smooth-transition"
@@ -68,7 +70,7 @@ const Contact = () => {
                   <MapPin className="w-6 h-6 text-primary group-hover:rotate-12 smooth-transition" />
                 </div>
                 <div>
-                  <h3 className="font-bold mb-2">Visit Us</h3>
+                  <h3 className="font-bold mb-2">{t('contact.address')}</h3>
                   <p className="text-muted-foreground">
                     Available online worldwide
                   </p>
@@ -82,26 +84,26 @@ const Contact = () => {
             <form className="space-y-4">
               <div>
                 <Input
-                  placeholder="Your Name"
+                  placeholder={t('contact.name')}
                   className="bg-secondary/50 border-border"
                 />
               </div>
               <div>
                 <Input
                   type="email"
-                  placeholder="Your Email"
+                  placeholder={t('contact.email')}
                   className="bg-secondary/50 border-border"
                 />
               </div>
               <div>
                 <Input
-                  placeholder="Subject"
+                  placeholder={t('contact.phone')}
                   className="bg-secondary/50 border-border"
                 />
               </div>
               <div>
                 <Textarea
-                  placeholder="Your Message"
+                  placeholder={t('contact.message')}
                   rows={5}
                   className="bg-secondary/50 border-border resize-none"
                 />
@@ -110,7 +112,7 @@ const Contact = () => {
                 type="submit"
                 className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold glow-effect hover:scale-105 smooth-transition"
               >
-                Send Message
+                {t('contact.send')}
               </Button>
             </form>
           </Card>

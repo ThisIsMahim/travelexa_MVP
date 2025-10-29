@@ -3,8 +3,10 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MapPin, Calendar, Users } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 const TourPackages = () => {
+  const { t } = useLanguage();
   const { ref: sectionRef, isVisible: sectionVisible } = useInViewAnimation<HTMLElement>();
   const { ref: cardsRef, isVisible: cardsVisible } = useInViewAnimation<HTMLDivElement>();
 
@@ -51,10 +53,10 @@ const TourPackages = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-6xl font-bold mb-4">
-            Exclusive <span className="text-gradient">Tour Packages</span>
+            {t('tour.title')}
           </h2>
           <p className="text-muted-foreground text-lg">
-            Curated experiences for unforgettable journeys
+            {t('tour.subtitle')}
           </p>
         </div>
 
@@ -97,7 +99,7 @@ const TourPackages = () => {
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center gap-3 text-sm">
                     <Calendar className="w-4 h-4 text-primary" />
-                    <span className="text-muted-foreground">{pkg.duration}</span>
+                    <span className="text-muted-foreground">{t('tour.duration')}: {pkg.duration}</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm">
                     <Users className="w-4 h-4 text-primary" />
@@ -115,13 +117,13 @@ const TourPackages = () => {
 
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-muted-foreground">Starting from</p>
+                    <p className="text-sm text-muted-foreground">{t('tour.price')}</p>
                     <p className="text-3xl font-bold text-primary">{pkg.price}</p>
                   </div>
                   <Button 
                     className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold group-hover:scale-105 smooth-transition"
                   >
-                    Book Now
+                    {t('tour.viewPackage')}
                   </Button>
                 </div>
               </div>

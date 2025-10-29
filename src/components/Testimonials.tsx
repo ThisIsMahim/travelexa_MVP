@@ -1,8 +1,10 @@
 import { useInViewAnimation } from '@/hooks/useInViewAnimation';
 import { Card } from '@/components/ui/card';
 import { Star, Quote } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 const Testimonials = () => {
+  const { t } = useLanguage();
   const { ref: sectionRef, isVisible: sectionVisible } = useInViewAnimation<HTMLElement>();
   const { ref: cardsRef, isVisible: cardsVisible } = useInViewAnimation<HTMLDivElement>();
 
@@ -47,10 +49,10 @@ const Testimonials = () => {
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-6xl font-bold mb-4">
-            What Our <span className="text-gradient">Travelers Say</span>
+            {t('testimonial.title')}
           </h2>
           <p className="text-muted-foreground text-lg">
-            Real experiences from real travelers
+            {t('testimonial.subtitle')}
           </p>
         </div>
 

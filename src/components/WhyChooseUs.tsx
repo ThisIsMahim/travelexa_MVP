@@ -1,30 +1,32 @@
 import { useInViewAnimation } from '@/hooks/useInViewAnimation';
 import { Shield, Clock, Globe, Headphones } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 const WhyChooseUs = () => {
+  const { t } = useLanguage();
   const { ref: sectionRef, isVisible: sectionVisible } = useInViewAnimation<HTMLElement>();
   const { ref: cardsRef, isVisible: cardsVisible } = useInViewAnimation<HTMLDivElement>();
 
   const features = [
     {
       icon: Shield,
-      title: 'Trusted & Reliable',
-      description: 'Your safety and satisfaction are our top priorities',
+      title: t('why.security'),
+      description: t('why.securityDesc'),
     },
     {
       icon: Clock,
-      title: 'Quick Booking',
-      description: 'Book flights and hotels in minutes, not hours',
+      title: t('why.support'),
+      description: t('why.supportDesc'),
     },
     {
       icon: Globe,
-      title: 'Global Reach',
-      description: 'Access destinations worldwide with ease',
+      title: t('why.experience'),
+      description: t('why.experienceDesc'),
     },
     {
       icon: Headphones,
-      title: '24/7 Support',
-      description: 'Our team is always here to help you',
+      title: t('why.bestPrice'),
+      description: t('why.bestPriceDesc'),
     },
   ];
 
@@ -38,10 +40,10 @@ const WhyChooseUs = () => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-6xl font-bold mb-4">
-            Why Choose <span className="text-gradient">Travelexa</span>
+            {t('why.title')}
           </h2>
           <p className="text-muted-foreground text-lg">
-            Travel with trust, explore with ease
+            {t('hero.subtitle')}
           </p>
         </div>
 

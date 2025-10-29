@@ -3,8 +3,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { Plane, Calendar, Users } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 const FlightBooking = () => {
+  const { t } = useLanguage();
   const { ref: sectionRef, isVisible: sectionVisible } = useInViewAnimation<HTMLElement>();
   const { ref: cardsRef, isVisible: cardsVisible } = useInViewAnimation<HTMLDivElement>();
 
@@ -24,10 +26,10 @@ const FlightBooking = () => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-6xl font-bold mb-4">
-            Book Your <span className="text-gradient">Flight</span>
+            {t('flight.title')}
           </h2>
           <p className="text-muted-foreground text-lg">
-            Fast, reliable, and hassle-free flight bookings
+            {t('flight.search')}
           </p>
         </div>
 
@@ -37,14 +39,14 @@ const FlightBooking = () => {
             <div className="flex items-center gap-3 bg-secondary/50 rounded-lg px-4 py-3">
               <Plane className="w-5 h-5 text-primary" />
               <Input
-                placeholder="From"
+                placeholder={t('flight.from')}
                 className="border-0 bg-transparent focus-visible:ring-0"
               />
             </div>
             <div className="flex items-center gap-3 bg-secondary/50 rounded-lg px-4 py-3">
               <Plane className="w-5 h-5 text-primary rotate-90" />
               <Input
-                placeholder="To"
+                placeholder={t('flight.to')}
                 className="border-0 bg-transparent focus-visible:ring-0"
               />
             </div>
@@ -56,7 +58,7 @@ const FlightBooking = () => {
               />
             </div>
             <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold glow-effect hover:scale-105 smooth-transition">
-              Search Flights
+              {t('flight.search')}
             </Button>
           </div>
         </Card>
@@ -83,7 +85,7 @@ const FlightBooking = () => {
                     <Plane className="w-5 h-5 text-primary" />
                     <span className="text-2xl font-bold">{flight.to}</span>
                   </div>
-                  <p className="text-muted-foreground">Duration: {flight.duration}</p>
+                  <p className="text-muted-foreground">{t('tour.duration')}: {flight.duration}</p>
                 </div>
                 <div className="text-right">
                   <p className="text-3xl font-bold text-primary mb-2 group-hover:scale-110 smooth-transition">{flight.price}</p>
@@ -92,7 +94,7 @@ const FlightBooking = () => {
                     size="sm"
                     className="border-primary/30 hover:bg-primary hover:text-primary-foreground font-semibold smooth-transition"
                   >
-                    Book Now
+                    {t('hotel.bookNow')}
                   </Button>
                 </div>
               </div>
