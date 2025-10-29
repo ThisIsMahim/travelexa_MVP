@@ -1,35 +1,10 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useInViewAnimation } from '@/hooks/useInViewAnimation';
 import { Card } from '@/components/ui/card';
 import { Star, Quote } from 'lucide-react';
 
-gsap.registerPlugin(ScrollTrigger);
-
 const Testimonials = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      if (cardsRef.current) {
-        const cards = cardsRef.current.querySelectorAll('.testimonial-card');
-        gsap.from(cards, {
-          scrollTrigger: {
-            trigger: cardsRef.current,
-            start: 'top 70%',
-          },
-          opacity: 0,
-          y: 80,
-          stagger: 0.2,
-          duration: 0.8,
-          ease: 'power3.out',
-        });
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  const { ref: sectionRef, isVisible: sectionVisible } = useInViewAnimation<HTMLElement>();
+  const { ref: cardsRef, isVisible: cardsVisible } = useInViewAnimation<HTMLDivElement>();
 
   const testimonials = [
     {
@@ -56,7 +31,12 @@ const Testimonials = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="py-24 px-6 relative overflow-hidden">
+    <section
+      ref={sectionRef}
+      className={`py-24 px-6 relative overflow-hidden transition-all duration-700 ease-out ${
+        sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      }`}
+    >
       {/* Background gradient */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl" 
@@ -74,11 +54,19 @@ const Testimonials = () => {
           </p>
         </div>
 
-        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div
+          ref={cardsRef}
+          className={`grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-700 ease-out ${
+            cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           {testimonials.map((testimonial, index) => (
             <Card
               key={index}
-              className="testimonial-card glass-card p-8 hover:border-primary/50 smooth-transition hover-lift cursor-pointer group"
+              style={{ transitionDelay: `${index * 120}ms` }}
+              className={`testimonial-card glass-card p-8 hover:border-primary/50 smooth-transition hover-lift cursor-pointer group transition-all duration-700 ${
+                cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
             >
               <Quote className="w-10 h-10 text-primary/30 mb-4 group-hover:text-primary/50 smooth-transition" />
               

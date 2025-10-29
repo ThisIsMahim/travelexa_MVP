@@ -1,36 +1,20 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useInViewAnimation } from '@/hooks/useInViewAnimation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card } from '@/components/ui/card';
 import { Phone, Mail, MapPin } from 'lucide-react';
 
-gsap.registerPlugin(ScrollTrigger);
-
 const Contact = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(sectionRef.current, {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-        },
-        opacity: 0,
-        y: 100,
-        duration: 1,
-        ease: 'power3.out',
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  const { ref: sectionRef, isVisible: sectionVisible } = useInViewAnimation<HTMLElement>();
 
   return (
-    <section ref={sectionRef} className="py-24 px-6 relative">
+    <section
+      ref={sectionRef}
+      className={`py-24 px-6 relative transition-all duration-700 ease-out ${
+        sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      }`}
+    >
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-6xl font-bold mb-4">
