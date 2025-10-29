@@ -1,48 +1,11 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useInViewAnimation } from '@/hooks/useInViewAnimation';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Star, MapPin } from 'lucide-react';
 
-gsap.registerPlugin(ScrollTrigger);
-
 const HotelShowcase = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(sectionRef.current, {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-        },
-        opacity: 0,
-        y: 100,
-        duration: 1,
-        ease: 'power3.out',
-      });
-
-      // Horizontal scroll animation
-      if (scrollRef.current) {
-        const cards = scrollRef.current.querySelectorAll('.hotel-card');
-        gsap.from(cards, {
-          scrollTrigger: {
-            trigger: scrollRef.current,
-            start: 'top 70%',
-          },
-          opacity: 0,
-          scale: 0.9,
-          stagger: 0.15,
-          duration: 0.8,
-          ease: 'power3.out',
-        });
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  const { ref: sectionRef, isVisible: sectionVisible } = useInViewAnimation<HTMLElement>();
+  const { ref: cardsRef, isVisible: cardsVisible } = useInViewAnimation<HTMLDivElement>();
 
   const hotels = [
     {
@@ -69,7 +32,12 @@ const HotelShowcase = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="py-24 px-6 relative overflow-hidden">
+    <section
+      ref={sectionRef}
+      className={`py-24 px-6 relative transition-all duration-700 ease-out ${
+        sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      }`}
+    >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-6xl font-bold mb-4">
@@ -81,13 +49,18 @@ const HotelShowcase = () => {
         </div>
 
         <div
-          ref={scrollRef}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          ref={cardsRef}
+          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-700 ease-out ${
+            cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
         >
           {hotels.map((hotel, index) => (
             <Card
               key={index}
-              className="hotel-card glass-card overflow-hidden group cursor-pointer hover-lift hover:border-primary/50 smooth-transition"
+              style={{ transitionDelay: `${index * 120}ms` }}
+              className={`hotel-card glass-card overflow-hidden group cursor-pointer hover-lift hover:border-primary/50 smooth-transition transition-all duration-700 ${
+                cardsVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+              }`}
             >
               <div className="relative h-64 overflow-hidden">
                 <img

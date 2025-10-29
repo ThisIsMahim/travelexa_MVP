@@ -1,37 +1,12 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useInViewAnimation } from '@/hooks/useInViewAnimation';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MapPin, Calendar, Users } from 'lucide-react';
 
-gsap.registerPlugin(ScrollTrigger);
-
 const TourPackages = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      if (cardsRef.current) {
-        const cards = cardsRef.current.querySelectorAll('.tour-card');
-        gsap.from(cards, {
-          scrollTrigger: {
-            trigger: cardsRef.current,
-            start: 'top 70%',
-          },
-          opacity: 0,
-          scale: 0.9,
-          stagger: 0.15,
-          duration: 0.8,
-          ease: 'power3.out',
-        });
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  const { ref: sectionRef, isVisible: sectionVisible } = useInViewAnimation<HTMLElement>();
+  const { ref: cardsRef, isVisible: cardsVisible } = useInViewAnimation<HTMLDivElement>();
 
   const packages = [
     {
@@ -67,7 +42,12 @@ const TourPackages = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="py-24 px-6 relative">
+    <section
+      ref={sectionRef}
+      className={`py-24 px-6 relative transition-all duration-700 ease-out ${
+        sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      }`}
+    >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-6xl font-bold mb-4">
@@ -78,11 +58,19 @@ const TourPackages = () => {
           </p>
         </div>
 
-        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div
+          ref={cardsRef}
+          className={`grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-700 ease-out ${
+            cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           {packages.map((pkg, index) => (
             <Card
               key={index}
-              className="tour-card glass-card overflow-hidden group cursor-pointer hover-lift hover:border-primary/50 smooth-transition"
+              style={{ transitionDelay: `${index * 120}ms` }}
+              className={`tour-card glass-card overflow-hidden group cursor-pointer hover-lift hover:border-primary/50 smooth-transition transition-all duration-700 ${
+                cardsVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+              }`}
             >
               <div className="relative h-56 overflow-hidden">
                 <img
