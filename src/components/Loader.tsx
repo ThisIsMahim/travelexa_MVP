@@ -6,8 +6,8 @@ export default function Loader({ progress, total, onLoaded }) {
   const percent = Math.min(100, Math.round((progress / total) * 100));
 
   useEffect(() => {
-    // Show brand intro first (1.5 seconds)
-    const introTimer = setTimeout(() => setShowIntro(false), 1500);
+    // Show brand intro first (2 seconds)
+    const introTimer = setTimeout(() => setShowIntro(false), 2000);
     return () => clearTimeout(introTimer);
   }, []);
 

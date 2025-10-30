@@ -211,9 +211,11 @@ const Hero = () => {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-          <span className="text-sm text-muted-foreground">Scroll</span>
-          <ChevronDown className="w-5 h-5 text-primary" />
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+          <div className="flex flex-col items-center gap-2 animate-bounce">
+            <span className="text-sm text-muted-foreground">Scroll</span>
+            <ChevronDown className="w-5 h-5 text-primary" />
+          </div>
         </div>
       </section>
     </>
