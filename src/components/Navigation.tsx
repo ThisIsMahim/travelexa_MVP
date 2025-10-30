@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Menu, X, Plane, Mail, Phone } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { Link } from 'react-router-dom';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,7 +43,7 @@ const Navigation = () => {
       <nav
         className={`fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ${
           isScrolled 
-            ? 'top-4 w-[95%] max-w-6xl bg-white/10 backdrop-blur-lg border border-white/20 rounded-full' 
+            ? 'top-4 w-[95%] max-w-6xl bg-white/10 backdrop-blur-lg rounded-full' 
             : 'top-0 w-full bg-transparent'
         }`}
       >
@@ -53,7 +54,7 @@ const Navigation = () => {
             {/* Logo */}
             <div className="flex items-center gap-2">
               <Plane className="w-6 h-6 text-primary" />
-              <span className="text-xl font-bold">Travelexa</span>
+              <a href="#home" className="text-xl font-bold">Travelexa</a>
             </div>
 
             {/* Desktop Navigation */}

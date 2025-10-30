@@ -10,6 +10,8 @@ export const translations = {
 
     // Hero Section
     'hero.title': 'Explore the World with TravelExa',
+    'hero.titleLine1': 'Explore the World',
+    'hero.titleLine2': 'with TravelExa',
     'hero.subtitle': 'Discover amazing destinations and create unforgettable memories',
     'hero.cta': 'Start Your Journey',
     'hero.searchPlaceholder': 'Where do you want to go?',
@@ -98,6 +100,8 @@ export const translations = {
 
     // Hero Section
     'hero.title': 'TravelExa এর সাথে বিশ্ব অন্বেষণ করুন',
+    'hero.titleLine1': 'বিশ্ব অন্বেষণ করুন',
+    'hero.titleLine2': 'TravelExa এর সাথে',
     'hero.subtitle': 'আশ্চর্যজনক গন্তব্য আবিষ্কার করুন এবং অবিস্মরণীয় স্মৃতি তৈরি করুন',
     'hero.cta': 'আপনার যাত্রা শুরু করুন',
     'hero.searchPlaceholder': 'আপনি কোথায় যেতে চান?',

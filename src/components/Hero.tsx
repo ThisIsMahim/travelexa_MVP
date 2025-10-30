@@ -33,18 +33,36 @@ const Hero = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Title split reveal animation
+      // Title split reveal animation - by words for Bengali, by chars for English
       if (titleRef.current) {
-        const chars = titleRef.current.textContent?.split('') || [];
-        titleRef.current.innerHTML = chars
-          .map((char) => `<span class="inline-block opacity-0">${char === ' ' ? '&nbsp;' : char}</span>`)
-          .join('');
+        const isBengali = t('hero.titleLine1').match(/[\u0980-\u09FF]/);
+        const lines = titleRef.current.querySelectorAll('div');
         
-        gsap.to(titleRef.current.children, {
+        lines.forEach((line) => {
+          const text = line.textContent || '';
+          let elements: string[];
+          
+          if (isBengali) {
+            // Split by words for Bengali
+            elements = text.split(/\s+/);
+            line.innerHTML = elements
+              .map((word) => `<span class="inline-block opacity-0 mr-2">${word}</span>`)
+              .join('');
+          } else {
+            // Split by characters for English
+            const chars = text.split('');
+            line.innerHTML = chars
+              .map((char) => `<span class="inline-block opacity-0">${char === ' ' ? '&nbsp;' : char}</span>`)
+              .join('');
+          }
+        });
+        
+        // Animate all spans
+        gsap.to(titleRef.current.querySelectorAll('span'), {
           opacity: 1,
           y: 0,
           duration: 0.8,
-          stagger: 0.03,
+          stagger: isBengali ? 0.1 : 0.03,
           ease: 'power3.out',
           delay: 0.3,
         });
@@ -140,9 +158,10 @@ const Hero = () => {
       <div className="relative z-20 text-center px-6 max-w-5xl mx-auto">
         <h1
           ref={titleRef}
-          className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight text-white drop-shadow-lg"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-6 leading-tight text-white drop-shadow-lg max-w-full md:max-w-3xl mx-auto px-2"
         >
-          {t('hero.title')}
+          <div>{t('hero.titleLine1')}</div>
+          <div>{t('hero.titleLine2')}</div>
         </h1>
         <p
           ref={subtitleRef}
