@@ -101,7 +101,7 @@ const Footer = () => {
           </div>
           <div className="text-center text-xs text-muted-foreground/80">
             <span>
-              Developed by <a href="https://my-portfolio-v1-0-beta.vercel.app/" target="_blank" rel="noopener noreferrer" className="font-medium text-primary hover:underline">Skybridge Digital</a>
+              Developed by <a href="tel:+880 1794-985731" target="_blank" rel="noopener noreferrer" className="font-medium text-primary hover:underline">Skybridge Digital</a>
             </span>
           </div>
         </div>

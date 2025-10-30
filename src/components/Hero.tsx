@@ -21,10 +21,22 @@ const Hero = () => {
   const [allLoaded, setAllLoaded] = useState(false);
 
   const videos = [
-    '/videos/travel-bg-1-optimized.mp4',
-    '/videos/travel-bg-2-optimized.mp4',
-    '/videos/travel-bg-3-optimized.mp4',
-    '/videos/travel-bg-4-optimized.mp4',
+    {
+      webm: '/videos/travel-bg-1-optimized.webm',
+      mp4: '/videos/travel-bg-1-optimized.mp4',
+    },
+    {
+      webm: '/videos/travel-bg-2-optimized.webm',
+      mp4: '/videos/travel-bg-2-optimized.mp4',
+    },
+    {
+      webm: '/videos/travel-bg-3-optimized.webm',
+      mp4: '/videos/travel-bg-3-optimized.mp4',
+    },
+    {
+      webm: '/videos/travel-bg-4-optimized.webm',
+      mp4: '/videos/travel-bg-4-optimized.mp4',
+    },
   ];
 
   // Rotate videos every 8 seconds
@@ -65,8 +77,7 @@ const Hero = () => {
             line.innerHTML = chars
               .map(
                 (char) =>
-                  `<span class="inline-block opacity-0">${
-                    char === ' ' ? '&nbsp;' : char
+                  `<span class="inline-block opacity-0">${char === ' ' ? '&nbsp;' : char
                   }</span>`
               )
               .join('');
@@ -127,13 +138,12 @@ const Hero = () => {
 
       <section
         ref={heroRef}
-        className={`relative min-h-screen flex items-center justify-center overflow-hidden bg-black transition-opacity duration-1000 ${
-          allLoaded ? 'opacity-100' : 'opacity-0'
-        }`}
+        className={`relative min-h-screen flex items-center justify-center overflow-hidden bg-black transition-opacity duration-1000 ${allLoaded ? 'opacity-100' : 'opacity-0'
+          }`}
       >
         {/* --- Background Videos --- */}
         <div ref={videoContainerRef} className="absolute inset-0 z-0 overflow-hidden">
-          {videos.map((src, index) => (
+          {videos.map((video, index) => (
             <video
               key={index}
               autoPlay
@@ -144,11 +154,11 @@ const Hero = () => {
               onLoadedData={() =>
                 setLoadedVideos((count) => Math.min(count + 1, videos.length))
               }
-              className={`absolute w-full h-full object-cover transition-opacity duration-[2500ms] ease-in-out ${
-                index === currentVideoIndex ? 'opacity-100' : 'opacity-0'
-              }`}
+              className={`absolute w-full h-full object-cover transition-opacity duration-[2500ms] ease-in-out ${index === currentVideoIndex ? 'opacity-100' : 'opacity-0'
+                }`}
             >
-              <source src={src} type="video/mp4" />
+              <source src={video.webm} type="video/webm" />
+              <source src={video.mp4} type="video/mp4" />
             </video>
           ))}
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/70"></div>
