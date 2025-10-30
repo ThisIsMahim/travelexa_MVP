@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Button } from '@/components/ui/button';
@@ -13,6 +13,23 @@ const Hero = () => {
   const orbRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const videoContainerRef = useRef<HTMLDivElement>(null);
+
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const videos = [
+    '/videos/travel-bg-1-optimized.mp4',
+    '/videos/travel-bg-2-optimized.mp4',
+    '/videos/travel-bg-3-optimized.mp4',
+    '/videos/travel-bg-4-optimized.mp4',
+  ];
+
+  // Auto-rotate videos every 8 seconds with smooth fade
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentVideoIndex((prev) => (prev + 1) % videos.length);
+    }, 8000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -71,28 +88,65 @@ const Hero = () => {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
     >
-      {/* Animated gradient orb */}
+      {/* --- Background Videos Layer --- */}
+      <div ref={videoContainerRef} className="absolute inset-0 z-0 overflow-hidden">
+        {videos.map((src, index) => (
+          <video
+            key={index}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            className={`absolute w-full h-full object-cover transition-opacity duration-[2500ms] ease-in-out ${
+              index === currentVideoIndex ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <source src={src} type="video/mp4" />
+          </video>
+        ))}
+        
+        {/* Multi-layer gradient overlay for premium look */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/70"></div>
+        
+        {/* Subtle vignette effect */}
+        <div className="absolute inset-0 bg-radial-gradient opacity-40 pointer-events-none" 
+          style={{
+            background: 'radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.4) 100%)'
+          }}>
+        </div>
+        
+        {/* Animated light rays effect */}
+        <div className="absolute inset-0 opacity-20 pointer-events-none"
+          style={{
+            background: 'linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.03) 50%, transparent 70%)',
+            animation: 'shimmer 8s infinite'
+          }}>
+        </div>
+      </div>
+
+      {/* --- Floating Glow Orb (depth effect) --- */}
       <div
         ref={orbRef}
-        className="absolute w-[500px] h-[500px] rounded-full opacity-40 blur-3xl"
+        className="absolute w-[600px] h-[600px] rounded-full opacity-30 blur-3xl pointer-events-none"
         style={{
-          background: 'var(--gradient-glow)',
+          background: 'radial-gradient(circle at center, rgba(59, 130, 246, 0.4), transparent 70%)',
         }}
       />
 
-      {/* Hero content */}
-      <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
+      {/* --- Hero Content (Foreground) --- */}
+      <div className="relative z-20 text-center px-6 max-w-5xl mx-auto">
         <h1
           ref={titleRef}
-          className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight"
+          className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight text-white drop-shadow-lg"
         >
           {t('hero.title')}
         </h1>
         <p
           ref={subtitleRef}
-          className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto"
+          className="text-xl md:text-2xl text-gray-200 mb-12 max-w-2xl mx-auto drop-shadow-md"
         >
           {t('hero.subtitle')}
         </p>
