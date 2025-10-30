@@ -18,6 +18,7 @@ const Hero = () => {
 
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [loadedVideos, setLoadedVideos] = useState(0);
+  const [fakeProgress, setFakeProgress] = useState(0);
   const [allLoaded, setAllLoaded] = useState(false);
 
   const videos = [
@@ -39,6 +40,26 @@ const Hero = () => {
     },
   ];
 
+  // Fake progress animation (0 to 92% over 7 seconds)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFakeProgress((prev) => {
+        if (prev >= 92) return prev;
+        return Math.min(prev + 2, 92);
+      });
+    }, 150);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Handle video loading (only track first 2 videos)
+  useEffect(() => {
+    if (loadedVideos >= 2) {
+      setFakeProgress(100);
+      const timeout = setTimeout(() => setAllLoaded(true), 300);
+      return () => clearTimeout(timeout);
+    }
+  }, [loadedVideos]);
+
   // Rotate videos every 8 seconds
   useEffect(() => {
     const interval = setInterval(() => {
@@ -47,15 +68,7 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, [videos.length]);
 
-  // Handle video loading
-  useEffect(() => {
-    if (loadedVideos >= videos.length) {
-      const timeout = setTimeout(() => setAllLoaded(true), 500);
-      return () => clearTimeout(timeout);
-    }
-  }, [loadedVideos, videos.length]);
-
-  // GSAP animations (after everything is loaded)
+  // GSAP animations (after loading complete)
   useEffect(() => {
     if (!allLoaded) return;
 
@@ -130,16 +143,15 @@ const Hero = () => {
     <>
       {!allLoaded && (
         <Loader
-          progress={loadedVideos}
-          total={videos.length}
+          progress={fakeProgress}
+          total={100}
           onLoaded={() => setAllLoaded(true)}
         />
       )}
 
       <section
         ref={heroRef}
-        className={`relative min-h-screen flex items-center justify-center overflow-hidden bg-black transition-opacity duration-1000 ${allLoaded ? 'opacity-100' : 'opacity-0'
-          }`}
+        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
       >
         {/* --- Background Videos --- */}
         <div ref={videoContainerRef} className="absolute inset-0 z-0 overflow-hidden">
@@ -151,9 +163,11 @@ const Hero = () => {
               muted
               playsInline
               preload="auto"
-              onLoadedData={() =>
-                setLoadedVideos((count) => Math.min(count + 1, videos.length))
-              }
+              onLoadedData={() => {
+                if (index < 2) {
+                  setLoadedVideos((count) => Math.min(count + 1, 2));
+                }
+              }}
               className={`absolute w-full h-full object-cover transition-opacity duration-[2500ms] ease-in-out ${index === currentVideoIndex ? 'opacity-100' : 'opacity-0'
                 }`}
             >
