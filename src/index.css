@@ -149,4 +149,71 @@ All colors MUST be HSL.
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
   }
+
+  /* Motto section animations */
+  @keyframes gradient-x {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .animate-gradient-x {
+    background-size: 200% 200%;
+    animation: gradient-x 5s ease infinite;
+  }
+
+  .delay-500 {
+    animation-delay: 500ms;
+  }
+
+  .delay-1000 {
+    animation-delay: 1000ms;
+  }
+
+  .delay-2000 {
+    animation-delay: 2000ms;
+  }
+
+  /* Plane trail effect */
+  @keyframes trail {
+    0% {
+      opacity: 0;
+      width: 0;
+    }
+    50% {
+      opacity: 1;
+      width: 128px;
+    }
+    100% {
+      opacity: 0;
+      width: 0;
+    }
+  }
+
+  /* Custom Scrollbar - Luxury Gold Design */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(0 0% 5%);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(43 96% 56%);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(43 96% 56% / 0.8);
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(43 96% 56%) hsl(0 0% 5%);
+  }
 }

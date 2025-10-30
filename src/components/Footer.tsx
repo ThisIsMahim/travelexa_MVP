@@ -95,8 +95,15 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground">
-          <p>{t('footer.copyright')}</p>
+        <div className="space-y-4">
+          <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground">
+            <p>{t('footer.copyright')}</p>
+          </div>
+          <div className="text-center text-xs text-muted-foreground/80">
+            <span>
+              Developed by <a href="https://my-portfolio-v1-0-beta.vercel.app/" target="_blank" rel="noopener noreferrer" className="font-medium text-primary hover:underline">Skybridge Digital</a>
+            </span>
+          </div>
         </div>
       </div>
     </footer>

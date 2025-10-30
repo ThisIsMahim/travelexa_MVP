@@ -181,7 +181,7 @@ const Hero = () => {
           <Button 
             size="lg" 
             variant="outline" 
-            className="border-primary/30 hover:bg-primary/10 hover:border-primary hover:scale-105 smooth-transition font-semibold"
+            className="border-primary/30 hover:bg-primary/10 hover:border-primary hover:text-primary hover:scale-105 smooth-transition font-semibold"
             onClick={() => document.getElementById('hotels')?.scrollIntoView({ behavior: 'smooth' })}
           >
             {t('hotel.title')}

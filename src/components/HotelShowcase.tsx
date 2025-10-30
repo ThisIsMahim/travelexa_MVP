@@ -1,9 +1,13 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useInViewAnimation } from '@/hooks/useInViewAnimation';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Star, MapPin, PhoneCall, CheckCircle2, Building2, CalendarCheck, Calendar as CalendarIcon, Users, Search } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Star, MapPin, PhoneCall, CheckCircle2, Building2, CalendarCheck, Calendar as CalendarIcon, Users, Search, X, Mail, User } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { useToast } from '@/hooks/use-toast';
 import {
   Dialog,
   DialogContent,
@@ -16,7 +20,6 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Input } from '@/components/ui/input';
 import { Calendar } from '@/components/ui/calendar';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
@@ -76,6 +79,7 @@ const HotelShowcase = () => {
   const { t } = useLanguage();
   const { ref: sectionRef, isVisible: sectionVisible } = useInViewAnimation<HTMLElement>();
   const { ref: cardsRef, isVisible: cardsVisible } = useInViewAnimation<HTMLDivElement>();
+  const navigate = useNavigate();
   const [selectedHotel, setSelectedHotel] = useState<HotelInfo | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [destination, setDestination] = useState('Dhaka');
@@ -84,6 +88,36 @@ const HotelShowcase = () => {
     to: new Date(new Date().setDate(new Date().getDate() + 2)),
   });
   const [guests, setGuests] = useState('2 adults · 1 room');
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [specialRequests, setSpecialRequests] = useState('');
+  const { toast } = useToast();
+
+  const displayedHotels = hotels.slice(0, 3);
+  const hasMoreHotels = hotels.length > displayedHotels.length;
+
+  const handleConfirmBooking = () => {
+    if (!fullName || !email || !phone) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all required fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    toast({
+      title: "🏨 Hotel Booked Successfully!",
+      description: "Your hotel reservation has been confirmed. You will be contacted shortly with booking details.",
+    });
+
+    setIsDialogOpen(false);
+    setFullName('');
+    setEmail('');
+    setPhone('');
+    setSpecialRequests('');
+  };
 
   return (
     <section
@@ -251,7 +285,7 @@ const HotelShowcase = () => {
             cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
         >
-          {hotels.map((hotel, index) => (
+          {displayedHotels.map((hotel, index) => (
             <Card
               key={index}
               style={{ transitionDelay: `${index * 120}ms` }}
@@ -298,20 +332,46 @@ const HotelShowcase = () => {
             </Card>
           ))}
         </div>
+
+        {hasMoreHotels && (
+          <div className="mt-10 text-center">
+            <Button
+              variant="outline"
+              className="border-primary/40 hover:bg-primary hover:text-primary-foreground font-semibold smooth-transition"
+              onClick={() => navigate('/hotels')}
+            >
+              {t('hotel.showAll')}
+            </Button>
+          </div>
+        )}
       </div>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="m-0 h-[100dvh] w-[100dvw] max-w-[100dvw] rounded-none border-0 bg-background/95 p-0 shadow-none">
+        <DialogContent hideClose className="m-0 h-[100dvh] w-[100dvw] max-w-[100dvw] rounded-none border-0 bg-background/98 backdrop-blur-xl p-0 shadow-2xl">
           {selectedHotel && (
-            <div className="flex h-full min-h-0 flex-col">
+            <div className="flex h-full min-h-0 flex-col relative">
+              {/* Custom Close Button */}
+              <button
+                onClick={() => setIsDialogOpen(false)}
+                className="absolute top-4 right-4 sm:top-8 sm:right-8 z-50 group"
+                aria-label="Close dialog"
+              >
+                <div className="relative">
+                  <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl group-hover:bg-primary/30 transition-all duration-300 group-hover:scale-150" />
+                  <div className="relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-background border-2 border-primary/30 shadow-lg group-hover:border-primary group-hover:shadow-primary/50 group-hover:scale-110 group-active:scale-95 transition-all duration-300 ease-out">
+                    <X className="w-6 h-6 sm:w-7 sm:h-7 text-muted-foreground group-hover:text-primary group-hover:rotate-90 transition-all duration-300" />
+                  </div>
+                </div>
+              </button>
+
               <ScrollArea type="auto" className="flex-1 min-h-0 bg-gradient-to-b from-primary/5 via-background to-background">
-                <div className="px-6 py-10 sm:px-16 sm:py-14">
+                <div className="px-6 py-10 sm:px-16 sm:py-14 pt-20">
                   <div className="mx-auto w-full max-w-4xl space-y-8">
                     <DialogHeader className="space-y-3 text-left">
-                      <DialogTitle className="flex items-center gap-3 text-3xl font-bold text-primary">
-                        <CheckCircle2 className="w-6 h-6" /> {t('hotel.modalTitle')}
+                      <DialogTitle className="flex items-center gap-3 text-3xl sm:text-4xl font-bold text-primary animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <CheckCircle2 className="w-7 h-7 sm:w-8 sm:h-8 text-primary animate-pulse" /> {t('hotel.modalTitle')}
                       </DialogTitle>
-                      <DialogDescription className="text-base text-muted-foreground">
+                      <DialogDescription className="text-base sm:text-lg text-muted-foreground animate-in fade-in slide-in-from-bottom-4 duration-500 delay-100">
                         {t('hotel.modalSubtitle')}
                       </DialogDescription>
                     </DialogHeader>
@@ -390,6 +450,62 @@ const HotelShowcase = () => {
                         </div>
                       </div>
 
+                      <Separator className="my-6" />
+
+                      {/* Booking Form */}
+                      <div className="rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 to-background p-6 shadow-lg">
+                        <h4 className="text-xl font-semibold text-primary mb-6 flex items-center gap-2">
+                          <User className="w-5 h-5" /> Guest Details
+                        </h4>
+                        <div className="grid gap-5">
+                          <div className="grid gap-2">
+                            <Label htmlFor="hotelFullName" className="text-sm font-medium">Full Name *</Label>
+                            <Input
+                              id="hotelFullName"
+                              placeholder="Enter your full name"
+                              value={fullName}
+                              onChange={(e) => setFullName(e.target.value)}
+                              className="bg-background"
+                            />
+                          </div>
+                          <div className="grid gap-2">
+                            <Label htmlFor="hotelEmail" className="text-sm font-medium">Email Address *</Label>
+                            <div className="relative">
+                              <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                              <Input
+                                id="hotelEmail"
+                                type="email"
+                                placeholder="your.email@example.com"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="bg-background pl-10"
+                              />
+                            </div>
+                          </div>
+                          <div className="grid gap-2">
+                            <Label htmlFor="hotelPhone" className="text-sm font-medium">Phone Number *</Label>
+                            <Input
+                              id="hotelPhone"
+                              type="tel"
+                              placeholder="+880 1XXX-XXXXXX"
+                              value={phone}
+                              onChange={(e) => setPhone(e.target.value)}
+                              className="bg-background"
+                            />
+                          </div>
+                          <div className="grid gap-2">
+                            <Label htmlFor="specialRequests" className="text-sm font-medium">Special Requests (Optional)</Label>
+                            <Input
+                              id="specialRequests"
+                              placeholder="Early check-in, extra bed, etc."
+                              value={specialRequests}
+                              onChange={(e) => setSpecialRequests(e.target.value)}
+                              className="bg-background"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
                       <div className="flex items-start gap-3 rounded-2xl border border-primary/15 bg-background/80 p-6 text-sm leading-relaxed text-muted-foreground">
                         <PhoneCall className="h-5 w-5 flex-shrink-0 text-primary" />
                         <p>{t('hotel.modalContact')}</p>
@@ -404,7 +520,7 @@ const HotelShowcase = () => {
                   {selectedHotel.name}
                 </p>
                 <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
-                  <Button size="lg" className="w-full sm:w-auto" onClick={() => setIsDialogOpen(false)}>
+                  <Button size="lg" className="w-full sm:w-auto" onClick={handleConfirmBooking}>
                     {t('hotel.modalPrimary')}
                   </Button>
                   <Button

@@ -32,6 +32,7 @@ export const translations = {
     'flight.search': 'Search Flights',
     'flight.oneWay': 'One Way',
     'flight.roundTrip': 'Round Trip',
+    'flight.showAll': 'Show All Flights',
 
     // Hotel Showcase
     'hotel.title': 'Hotels Across Bangladesh',
@@ -58,6 +59,7 @@ export const translations = {
     'hotel.amenity.pickup': 'Airport pickup & drop service',
     'hotel.amenity.familyRooms': 'Family-friendly rooms available',
     'hotel.amenity.support': '24/7 Bengali support',
+    'hotel.showAll': 'Show All Hotels',
 
     // Tour Packages
     'tour.title': 'Tour Packages',
@@ -78,6 +80,7 @@ export const translations = {
     'tour.modalContact': 'Our Bangladesh team will call within 10 minutes to finalize your tour.',
     'tour.modalPrimary': 'Book This Tour',
     'tour.modalSecondary': 'Contact Us',
+    'tour.showAll': 'Show All Tours',
 
     // Why Choose Us
     'why.title': 'Why Choose TravelExa?',
@@ -116,6 +119,15 @@ export const translations = {
     'footer.privacy': 'Privacy Policy',
     'footer.terms': 'Terms of Service',
     'footer.copyright': '© 2024 TravelExa. All rights reserved.',
+
+    // Motto Section
+    'motto.title': 'With Travelexa',
+    'motto.stay.title': 'Stay',
+    'motto.stay.description': 'Book and stay at any hotel across Bangladesh with confidence and comfort',
+    'motto.travel.title': 'Travel',
+    'motto.travel.description': 'Fly to your dream destinations with our best flight deals and seamless booking',
+    'motto.explore.title': 'Explore',
+    'motto.explore.description': 'Discover amazing tour packages and create unforgettable memories',
 
     // Common
     'common.loading': 'Loading...',
@@ -158,6 +170,7 @@ export const translations = {
     'flight.search': 'ফ্লাইট খুঁজুন',
     'flight.oneWay': 'এক দিকে',
     'flight.roundTrip': 'রাউন্ড ট্রিপ',
+    'flight.showAll': 'সব ফ্লাইট দেখুন',
 
     // Hotel Showcase
     'hotel.title': 'বাংলাদেশের হোটেল',
@@ -184,6 +197,7 @@ export const translations = {
     'hotel.amenity.pickup': 'এয়ারপোর্ট পিকআপ ও ড্রপ সার্ভিস',
     'hotel.amenity.familyRooms': 'পরিবারবান্ধব রুম সুবিধা',
     'hotel.amenity.support': '২৪/৭ বাংলা সহায়তা',
+    'hotel.showAll': 'সব হোটেল দেখুন',
 
     // Tour Packages
     'tour.title': 'ট্যুর প্যাকেজ',
@@ -204,6 +218,7 @@ export const translations = {
     'tour.modalContact': 'নিশ্চিতকরণের পর ১০ মিনিটের মধ্যে আমাদের বাংলাদেশি টিম আপনাকে কল করবে।',
     'tour.modalPrimary': 'এই ট্যুর বুক করুন',
     'tour.modalSecondary': 'আমাদের সাথে যোগাযোগ করুন',
+    'tour.showAll': 'সব ট্যুর দেখুন',
 
     // Why Choose Us
     'why.title': 'কেন TravelExa বেছে নিন?',
@@ -242,6 +257,15 @@ export const translations = {
     'footer.privacy': 'গোপনীয়তা নীতি',
     'footer.terms': 'সেবার শর্তাবলী',
     'footer.copyright': '© ২০২৪ TravelExa। সর্বাধিকার সংরক্ষিত।',
+
+    // Motto Section
+    'motto.title': 'Travelexa এর সাথে',
+    'motto.stay.title': 'থাকুন',
+    'motto.stay.description': 'বাংলাদেশের যেকোনো জেলায় আত্মবিশ্বাস এবং আরামের সাথে হোটেল বুক করুন',
+    'motto.travel.title': 'ভ্রমণ করুন',
+    'motto.travel.description': 'সেরা ফ্লাইট ডিল এবং সহজ বুকিংয়ের মাধ্যমে আপনার স্বপ্নের গন্তব্যে উড়ে যান',
+    'motto.explore.title': 'ঘুরুন',
+    'motto.explore.description': 'অস্থির সব ট্যুর প্যাকেজ আবিষ্কার করুন এবং অবিস্মরণীয় স্মৃতি তৈরি করুন',
 
     // Common
     'common.loading': 'লোড হচ্ছে...',

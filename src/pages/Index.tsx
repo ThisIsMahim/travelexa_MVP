@@ -1,5 +1,6 @@
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
+import Motto from '@/components/Motto';
 import FlightBooking from '@/components/FlightBooking';
 import HotelShowcase from '@/components/HotelShowcase';
 import TourPackages from '@/components/TourPackages';
@@ -19,6 +20,7 @@ const Index = () => {
         <div id="home">
           <Hero />
         </div>
+        <Motto />
         <div id="flights">
           <FlightBooking />
         </div>

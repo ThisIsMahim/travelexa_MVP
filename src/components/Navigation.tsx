@@ -137,7 +137,7 @@ const Navigation = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className="block text-lg font-serif text-white hover:text-white/80 transition-colors"
+                className="block text-lg font-serif text-white hover:text-primary transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 {link.name}
