@@ -14,7 +14,7 @@ const Testimonials = () => {
       location: 'Dhaka, Bangladesh',
       rating: 5,
       text: 'Travelexa made my Dubai trip seamless! The booking process was incredibly easy and customer support was available 24/7.',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop',
+      image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.expedia.com%2FDhaka-Hotels-Dhaka-Regency-Hotel-Resort.h1792543.Hotel-Information&psig=AOvVaw2rjclDImx23Eg18Tsuq_O2&ust=1761860579765000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCIiamL2xypADFQAAAAAdAAAAABAE',
     },
     {
       name: 'Sarah Rahman',
