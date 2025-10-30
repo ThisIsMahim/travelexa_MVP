@@ -9,13 +9,40 @@ interface LoaderProps {
 
 export default function Loader({ progress, total, onLoaded }: LoaderProps) {
   const [showIntro, setShowIntro] = useState(true);
-  const percent = Math.min(100, Math.round((progress / total) * 100));
+  const [manualProgress, setManualProgress] = useState(0);
+
+  // Calculate actual progress from video loading
+  const actualProgress = Math.round((progress / total) * 100);
+
+  // Use manual progress for first 24%, then switch to actual progress
+  const percent = Math.min(100, progress === 0 ? manualProgress : Math.max(25, actualProgress));
 
   useEffect(() => {
     // Show brand intro first (2 seconds)
     const introTimer = setTimeout(() => setShowIntro(false), 2000);
     return () => clearTimeout(introTimer);
   }, []);
+
+  // Manual progress animation while waiting for first video
+  useEffect(() => {
+    if (progress === 0) {
+      // Gradually fill to 24% while waiting for first video to load
+      // Starts slow, then gradually increases speed
+      let currentProgress = 0;
+      const interval = setInterval(() => {
+        setManualProgress(prev => {
+          currentProgress = prev + 1;
+          if (currentProgress >= 24) {
+            clearInterval(interval);
+            return 24;
+          }
+          return currentProgress;
+        });
+      }, 200); // Slower, more realistic progression: 200ms * 24 = ~4.8 seconds
+
+      return () => clearInterval(interval);
+    }
+  }, [progress]);
 
   useEffect(() => {
     if (percent >= 100 && !showIntro) {
