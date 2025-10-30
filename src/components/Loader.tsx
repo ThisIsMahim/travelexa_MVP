@@ -1,7 +1,13 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
-export default function Loader({ progress, total, onLoaded }) {
+interface LoaderProps {
+  progress: number;
+  total: number;
+  onLoaded: () => void;
+}
+
+export default function Loader({ progress, total, onLoaded }: LoaderProps) {
   const [showIntro, setShowIntro] = useState(true);
   const percent = Math.min(100, Math.round((progress / total) * 100));
 
@@ -60,58 +66,51 @@ export default function Loader({ progress, total, onLoaded }) {
           {/* --- Brand Intro --- */}
           {showIntro ? (
             <motion.div
-              className="flex flex-col items-center gap-2"
+              className="flex flex-col items-center gap-2 relative z-10"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1 }}
             >
-              <h1 className="text-3xl md:text-4xl font-black text-[#CBB16A] tracking-wide">
+              <h1 className="text-3xl md:text-4xl font-black text-[#CBB16A] tracking-wide drop-shadow-lg">
                 Travelexa
               </h1>
-              <p className="text-gray-400 text-sm uppercase tracking-widest">
+              <p className="text-gray-300 text-sm uppercase tracking-widest drop-shadow-md">
                 in collaboration with
               </p>
-              <p className="text-[#CBB16A] text-lg font-semibold tracking-wide">
+              <p className="text-[#CBB16A] text-lg font-semibold tracking-wide drop-shadow-lg">
                 SkyBridge Digital
               </p>
             </motion.div>
           ) : (
-            <>
+            <motion.div
+              className="flex flex-col items-center relative z-10"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            >
               {/* --- Loading Text --- */}
-              <motion.p
-                className="text-center text-lg md:text-xl font-semibold text-[#CBB16A] mb-4"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1 }}
-              >
+              <p className="text-center text-lg md:text-xl font-semibold text-[#CBB16A] mb-4 drop-shadow-lg">
                 Loading a smooth experience for you
                 <br />
-                <span className="text-gray-400 text-sm">
+                <span className="text-gray-300 text-sm drop-shadow-md">
                   — by <span className="text-[#CBB16A] font-bold">SkyBridge Digital Team</span>
                 </span>
-              </motion.p>
+              </p>
 
               {/* --- Progress Bar --- */}
-              <div className="relative w-56 h-1.5 bg-gray-800 mt-2 rounded-full overflow-hidden">
+              <div className="relative w-56 h-1.5 bg-gray-800 mt-2 rounded-full overflow-hidden shadow-lg">
                 <motion.div
-                  className="absolute left-0 top-0 h-full bg-[#CBB16A]"
+                  className="absolute left-0 top-0 h-full bg-[#CBB16A] shadow-sm"
                   animate={{ width: `${percent}%` }}
                   transition={{ duration: 0.4, ease: "easeInOut" }}
                 />
               </div>
 
               {/* --- Percentage --- */}
-              <motion.p
-                className="mt-3 text-gray-500 text-sm"
-                key={percent}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
+              <p className="mt-3 text-gray-400 text-sm drop-shadow-md font-medium">
                 {percent}%
-              </motion.p>
-            </>
+              </p>
+            </motion.div>
           )}
         </motion.div>
       )}

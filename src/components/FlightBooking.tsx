@@ -84,10 +84,10 @@ const FlightBooking = () => {
   const allAvailableDates = generateAvailableDates(30);
 
   const sampleFlights: FlightInfo[] = [
-    { 
-      from: 'Dhaka', 
-      to: 'Dubai', 
-      price: '৳32,500', 
+    {
+      from: 'Dhaka',
+      to: 'Dubai',
+      price: '৳32,500',
       duration: '5h 30m',
       airline: 'Emirates',
       departureTime: '10:30 AM',
@@ -97,10 +97,10 @@ const FlightBooking = () => {
       amenities: ['WiFi Available', 'Meals Included', 'Entertainment System', 'USB Charging', 'In-Flight Shopping'],
       availableDates: allAvailableDates
     },
-    { 
-      from: 'Chittagong', 
-      to: 'Dubai', 
-      price: '৳34,800', 
+    {
+      from: 'Chittagong',
+      to: 'Dubai',
+      price: '৳34,800',
       duration: '6h 15m',
       airline: 'Emirates',
       departureTime: '1:20 PM',
@@ -110,10 +110,10 @@ const FlightBooking = () => {
       amenities: ['WiFi Available', 'Meals Included', 'Entertainment System', 'USB Charging'],
       availableDates: allAvailableDates.filter((_, i) => i % 2 === 0)
     },
-    { 
-      from: 'Dhaka', 
-      to: 'Singapore', 
-      price: '৳37,600', 
+    {
+      from: 'Dhaka',
+      to: 'Singapore',
+      price: '৳37,600',
       duration: '4h 15m',
       airline: 'Singapore Airlines',
       departureTime: '11:45 PM',
@@ -123,10 +123,10 @@ const FlightBooking = () => {
       amenities: ['WiFi Available', 'Premium Meals', 'Entertainment System', 'Extra Legroom', 'Priority Boarding'],
       availableDates: allAvailableDates
     },
-    { 
-      from: 'Chittagong', 
-      to: 'Bangkok', 
-      price: '৳22,400', 
+    {
+      from: 'Chittagong',
+      to: 'Bangkok',
+      price: '৳22,400',
       duration: '2h 30m',
       airline: 'Thai Airways',
       departureTime: '4:40 PM',
@@ -136,10 +136,10 @@ const FlightBooking = () => {
       amenities: ['Meals Included', 'Entertainment System', 'USB Charging'],
       availableDates: allAvailableDates.filter((_, i) => [0, 2, 4, 6].includes(i % 7))
     },
-    { 
-      from: 'Dhaka', 
-      to: 'Bangkok', 
-      price: '৳20,200', 
+    {
+      from: 'Dhaka',
+      to: 'Bangkok',
+      price: '৳20,200',
       duration: '2h 45m',
       airline: 'Thai Airways',
       departureTime: '2:15 PM',
@@ -149,10 +149,10 @@ const FlightBooking = () => {
       amenities: ['Snacks Included', 'Entertainment System', 'USB Charging', 'Travel Amenity Kit'],
       availableDates: allAvailableDates.filter((_, i) => i % 2 === 0)
     },
-    { 
-      from: 'Dhaka', 
-      to: 'Kuala Lumpur', 
-      price: '৳22,400', 
+    {
+      from: 'Dhaka',
+      to: 'Kuala Lumpur',
+      price: '৳22,400',
       duration: '3h 20m',
       airline: 'Malaysia Airlines',
       departureTime: '8:00 AM',
@@ -162,10 +162,10 @@ const FlightBooking = () => {
       amenities: ['WiFi Available', 'Meals Included', 'Entertainment System', 'Lounge Access'],
       availableDates: allAvailableDates
     },
-    { 
-      from: 'Chittagong', 
-      to: 'Kuala Lumpur', 
-      price: '৳24,100', 
+    {
+      from: 'Chittagong',
+      to: 'Kuala Lumpur',
+      price: '৳24,100',
       duration: '3h 45m',
       airline: 'Malaysia Airlines',
       departureTime: '10:25 AM',
@@ -175,10 +175,10 @@ const FlightBooking = () => {
       amenities: ['WiFi Available', 'Meals Included', 'Entertainment System'],
       availableDates: allAvailableDates.filter((_, i) => i % 3 === 0)
     },
-    { 
-      from: 'Dhaka', 
-      to: 'Dubai', 
-      price: '৳34,700', 
+    {
+      from: 'Dhaka',
+      to: 'Dubai',
+      price: '৳34,700',
       duration: '5h 45m',
       airline: 'flydubai',
       departureTime: '3:45 PM',
@@ -188,10 +188,10 @@ const FlightBooking = () => {
       amenities: ['WiFi Available', 'Meals Included', 'Entertainment System', 'USB Charging'],
       availableDates: allAvailableDates
     },
-    { 
-      from: 'Dhaka', 
-      to: 'Bangkok', 
-      price: '৳21,300', 
+    {
+      from: 'Dhaka',
+      to: 'Bangkok',
+      price: '৳21,300',
       duration: '2h 50m',
       airline: 'US-Bangla Airlines',
       departureTime: '9:30 AM',
@@ -201,10 +201,10 @@ const FlightBooking = () => {
       amenities: ['Meals Included', 'Entertainment System', 'USB Charging'],
       availableDates: allAvailableDates.filter((_, i) => [0, 2, 4, 6].includes(i % 7))
     },
-    { 
-      from: 'Chittagong', 
-      to: 'Singapore', 
-      price: '৳39,200', 
+    {
+      from: 'Chittagong',
+      to: 'Singapore',
+      price: '৳39,200',
       duration: '4h 35m',
       airline: 'Singapore Airlines',
       departureTime: '6:50 PM',
@@ -226,37 +226,37 @@ const FlightBooking = () => {
 
   const handleSearch = () => {
     let results = sampleFlights;
-    
+
     // Filter by origin city if selected
     if (fromCity) {
       results = results.filter(flight => flight.from === fromCity);
     }
-    
+
     // Filter by destination if selected
     if (toCity) {
       results = results.filter(flight => flight.to === toCity);
     }
-    
+
     // Filter by date if selected
     if (date) {
       const selectedDate = new Date(date);
       selectedDate.setHours(0, 0, 0, 0);
-      
-      results = results.filter(flight => 
+
+      results = results.filter(flight =>
         flight.availableDates.some(availableDate => {
           const compareDate = new Date(availableDate);
           compareDate.setHours(0, 0, 0, 0);
           return compareDate.getTime() === selectedDate.getTime();
         })
       );
-      
+
       // Add the departure date to each result for display
       results = results.map(flight => ({
         ...flight,
         departureDate: selectedDate
       }));
     }
-    
+
     setSearchResults(results);
   };
 
@@ -268,18 +268,57 @@ const FlightBooking = () => {
   };
 
   const handleConfirmBooking = () => {
+    // Email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Phone validation regex (Bangladesh format)
+    const phoneRegex = /^(\+880|880|0)?1[3-9]\d{8}$/;
+
     if (!fullName || !email || !phone) {
       toast({
         title: "Missing Information",
         description: "Please fill in all required fields.",
         variant: "destructive",
       });
+      // Scroll to form section
+      const formElement = document.getElementById('flight-booking-form');
+      if (formElement) {
+        formElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      // Scroll to form section
+      const formElement = document.getElementById('flight-booking-form');
+      if (formElement) {
+        formElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return;
+    }
+
+    if (!phoneRegex.test(phone)) {
+      toast({
+        title: "Invalid Phone Number",
+        description: "Please enter a valid Bangladesh phone number (e.g., +880 1XXX-XXXXXX).",
+        variant: "destructive",
+      });
+      // Scroll to form section
+      const formElement = document.getElementById('flight-booking-form');
+      if (formElement) {
+        formElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
       return;
     }
 
     toast({
       title: "✈️ Flight Booked Successfully!",
       description: "Your flight has been booked. You will be contacted shortly with confirmation details.",
+      className: "bg-green-600 text-white border-green-600",
     });
 
     // Reset form and close dialog
@@ -300,9 +339,8 @@ const FlightBooking = () => {
   return (
     <section
       ref={sectionRef}
-      className={`py-24 px-6 relative transition-all duration-700 ease-out ${
-        sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-      }`}
+      className={`py-24 px-6 relative transition-all duration-700 ease-out ${sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`}
     >
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
@@ -320,7 +358,7 @@ const FlightBooking = () => {
             <div className="flex items-center  gap-3 bg-secondary/50 rounded-lg px-4 py-3">
               <Plane className="w-5 h-5 text-primary" />
               <Select value={fromCity} onValueChange={setFromCity}>
-                <SelectTrigger className="border-0 bg-transparent focus:ring-0">
+                <SelectTrigger className="border-0 bg-transparent">
                   <SelectValue placeholder={t('flight.from')} />
                 </SelectTrigger>
                 <SelectContent>
@@ -333,7 +371,7 @@ const FlightBooking = () => {
             <div className="flex items-center gap-3 bg-secondary/50 rounded-lg px-4 py-3">
               <Plane className="w-5 h-5 text-primary rotate-90" />
               <Select value={toCity} onValueChange={setToCity}>
-                <SelectTrigger className="border-0 bg-transparent focus:ring-0">
+                <SelectTrigger className="border-0 bg-transparent ">
                   <SelectValue placeholder={t('flight.to')} />
                 </SelectTrigger>
                 <SelectContent>
@@ -376,13 +414,13 @@ const FlightBooking = () => {
                 />
               </PopoverContent>
             </Popover>
-            <Button 
+            <Button
               onClick={handleSearch}
               className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold glow-effect hover:scale-105 smooth-transition"
             >
               {t('flight.search')}
             </Button>
-            <Button 
+            <Button
               onClick={handleReset}
               variant="outline"
               className="border-primary/30 hover:bg-primary/10 font-semibold smooth-transition"
@@ -397,17 +435,15 @@ const FlightBooking = () => {
         {displayedFlights.length > 0 && (
           <div
             ref={cardsRef}
-            className={`space-y-4 transition-all duration-700 ease-out ${
-              cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
+            className={`space-y-4 transition-all duration-700 ease-out ${cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
           >
             {displayedFlights.map((flight, index) => (
               <Card
                 key={index}
                 style={{ transitionDelay: `${index * 120}ms` }}
-                className={`glass-card p-6 hover:border-primary/50 smooth-transition cursor-pointer hover-lift group transition-all duration-700 transform ${
-                  cardsVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-6'
-                }`}
+                className={`glass-card p-6 hover:border-primary/50 smooth-transition cursor-pointer hover-lift group transition-all duration-700 transform ${cardsVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-6'
+                  }`}
               >
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                   <div className="flex-1">
@@ -432,8 +468,8 @@ const FlightBooking = () => {
                   </div>
                   <div className="text-right">
                     <p className="text-3xl font-bold text-primary mb-2 group-hover:scale-110 smooth-transition">{flight.price}</p>
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       size="sm"
                       onClick={() => handleOpenDialog(flight)}
                       className="border-primary/30 hover:bg-primary hover:text-primary-foreground font-semibold smooth-transition"
@@ -569,7 +605,7 @@ const FlightBooking = () => {
                       <Separator className="my-6" />
 
                       {/* Booking Form */}
-                      <div className="rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 to-background p-6 shadow-lg">
+                      <div id="flight-booking-form" className="rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 to-background p-6 shadow-lg">
                         <h4 className="text-xl font-semibold text-primary mb-6 flex items-center gap-2">
                           <User className="w-5 h-5" /> Passenger Details
                         </h4>

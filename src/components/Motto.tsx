@@ -243,7 +243,7 @@ const Motto = () => {
         className="fixed left-1/2 top-0 z-50 pointer-events-none transform -translate-x-1/2"
         style={{
           filter: 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.4))',
-        //   top: '100vh', // Start from below the hero section
+          //   top: '100vh', // Start from below the hero section
         }}
       >
         {/* Dotted trail - ABOVE the plane (behind it as it flies down) */}
@@ -253,7 +253,7 @@ const Motto = () => {
           <div className="w-1 h-1 rounded-full bg-white/30" />
           <div className="w-1 h-1 rounded-full bg-white/15" />
         </div>
-        
+
         {/* Simple clean airplane - top view, nose pointing down */}
         <svg
           width="48"
@@ -268,19 +268,19 @@ const Motto = () => {
             d="M24 4 L22 42 L24 44 L26 42 L24 4Z"
             fill="white"
           />
-          
+
           {/* Main wings */}
           <path
             d="M4 20 L8 22 L24 24 L40 22 L44 20 L42 18 L24 20 L6 18 L4 20Z"
             fill="white"
           />
-          
+
           {/* Tail wings */}
           <path
             d="M16 38 L24 40 L32 38 L30 36 L24 37 L18 36 L16 38Z"
             fill="white"
           />
-          
+
           {/* Nose tip */}
           <circle cx="24" cy="4" r="2" fill="white" />
         </svg>
@@ -302,7 +302,7 @@ const Motto = () => {
         {/* Stay Section - Left */}
         <div
           ref={stayRef}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-64"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-10 md:mb-32 lg:mb-50 "
         >
           <div className="flex flex-col items-start">
             <div className="relative mb-8">
@@ -333,7 +333,7 @@ const Motto = () => {
         {/* Travel Section - Right */}
         <div
           ref={travelRef}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-64"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-10 md:mb-32 lg:mb-50 "
         >
           {/* Flight Image with curved design - Left side */}
           <div className="relative group order-2 lg:order-1">
@@ -365,7 +365,7 @@ const Motto = () => {
         {/* Explore Section - Left */}
         <div
           ref={exploreRef}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-32"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-0 "
         >
           <div className="flex flex-col items-start">
             <div className="relative mb-8">

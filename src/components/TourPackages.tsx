@@ -68,18 +68,57 @@ const TourPackages = () => {
   const { toast } = useToast();
 
   const handleConfirmBooking = () => {
+    // Email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Phone validation regex (Bangladesh format)
+    const phoneRegex = /^(\+880|880|0)?1[3-9]\d{8}$/;
+
     if (!fullName || !email || !phone) {
       toast({
         title: "Missing Information",
         description: "Please fill in all required fields.",
         variant: "destructive",
       });
+      // Scroll to form section
+      const formElement = document.getElementById('tour-booking-form');
+      if (formElement) {
+        formElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      // Scroll to form section
+      const formElement = document.getElementById('tour-booking-form');
+      if (formElement) {
+        formElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return;
+    }
+
+    if (!phoneRegex.test(phone)) {
+      toast({
+        title: "Invalid Phone Number",
+        description: "Please enter a valid Bangladesh phone number (e.g., +880 1XXX-XXXXXX).",
+        variant: "destructive",
+      });
+      // Scroll to form section
+      const formElement = document.getElementById('tour-booking-form');
+      if (formElement) {
+        formElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
       return;
     }
 
     toast({
       title: "🎒 Tour Package Booked Successfully!",
       description: "Your tour package has been confirmed. You will be contacted shortly with itinerary details.",
+      className: "bg-green-600 text-white border-green-600",
     });
 
     setIsDialogOpen(false);
@@ -134,9 +173,8 @@ const TourPackages = () => {
   return (
     <section
       ref={sectionRef}
-      className={`py-24 px-6 relative transition-all duration-700 ease-out ${
-        sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-      }`}
+      className={`py-24 px-6 relative transition-all duration-700 ease-out ${sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        }`}
     >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
@@ -150,17 +188,15 @@ const TourPackages = () => {
 
         <div
           ref={cardsRef}
-          className={`grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-700 ease-out ${
-            cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}
+          className={`grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-700 ease-out ${cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
         >
           {displayedPackages.map((pkg, index) => (
             <Card
               key={index}
               style={{ transitionDelay: `${index * 120}ms` }}
-              className={`tour-card glass-card overflow-hidden group cursor-pointer hover-lift hover:border-primary/50 smooth-transition transition-all duration-700 ${
-                cardsVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-              }`}
+              className={`tour-card glass-card overflow-hidden group cursor-pointer hover-lift hover:border-primary/50 smooth-transition transition-all duration-700 ${cardsVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+                }`}
             >
               <div className="relative h-56 overflow-hidden">
                 <img
@@ -169,7 +205,7 @@ const TourPackages = () => {
                   className="w-full h-full object-cover smooth-transition group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
-                
+
                 <Badge className="absolute top-4 right-4 bg-primary text-primary-foreground font-semibold animate-pulse-glow">
                   {pkg.badge}
                 </Badge>
@@ -333,7 +369,7 @@ const TourPackages = () => {
                       <Separator className="my-6" />
 
                       {/* Booking Form */}
-                      <div className="rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 to-background p-6 shadow-lg">
+                      <div id="tour-booking-form" className="rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 to-background p-6 shadow-lg">
                         <h4 className="text-xl font-semibold text-primary mb-6 flex items-center gap-2">
                           <User className="w-5 h-5" /> Traveler Details
                         </h4>
