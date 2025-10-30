@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useInViewAnimation } from '@/hooks/useInViewAnimation';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Star, MapPin, PhoneCall, CheckCircle2, Building2, CalendarCheck } from 'lucide-react';
+import { Star, MapPin, PhoneCall, CheckCircle2, Building2, CalendarCheck, Calendar as CalendarIcon, Users, Search } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import {
   Dialog,
@@ -15,6 +15,13 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Input } from '@/components/ui/input';
+import { Calendar } from '@/components/ui/calendar';
+import { cn } from '@/lib/utils';
+import { format } from 'date-fns';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { DateRange } from 'react-day-picker';
 
 type HotelInfo = {
   name: string;
@@ -71,6 +78,12 @@ const HotelShowcase = () => {
   const { ref: cardsRef, isVisible: cardsVisible } = useInViewAnimation<HTMLDivElement>();
   const [selectedHotel, setSelectedHotel] = useState<HotelInfo | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [destination, setDestination] = useState('Dhaka');
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    from: new Date(),
+    to: new Date(new Date().setDate(new Date().getDate() + 2)),
+  });
+  const [guests, setGuests] = useState('2 adults · 1 room');
 
   return (
     <section
@@ -88,6 +101,149 @@ const HotelShowcase = () => {
             {t('hotel.subtitle')}
           </p>
         </div>
+
+        <Card className="glass-card border border-primary/15 shadow-lg backdrop-blur mb-16">
+          <div className="grid gap-4 p-6 md:grid-cols-[1.2fr,repeat(3,1fr),auto] md:items-center">
+            <div className="group rounded-xl border border-primary/10 bg-background/80 px-5 py-4 transition hover:border-primary/40">
+              <label className="text-xs uppercase tracking-wide text-muted-foreground mb-2 block">
+                {t('hero.searchPlaceholder')}
+              </label>
+              <div className="flex items-center gap-3">
+                <Search className="h-5 w-5 text-primary" />
+                <Input
+                  value={destination}
+                  onChange={(event) => setDestination(event.target.value)}
+                  placeholder="Dhaka, Bangladesh"
+                  className="border-0 bg-transparent px-0 text-base font-semibold text-foreground placeholder:text-muted-foreground focus-visible:ring-0"
+                />
+              </div>
+            </div>
+
+            <Popover>
+              <PopoverTrigger asChild>
+                <button
+                  className={cn(
+                    'group rounded-xl border border-primary/10 bg-background/80 px-5 py-4 text-left transition hover:border-primary/40',
+                  )}
+                >
+                  <label className="text-xs uppercase tracking-wide text-muted-foreground mb-2 block">
+                    {t('hero.checkIn')}
+                  </label>
+                  <div className="flex items-center gap-3 text-base font-semibold text-foreground">
+                    <CalendarIcon className="h-5 w-5 text-primary" />
+                    <span>
+                      {dateRange?.from ? format(dateRange.from, 'EEE, dd MMM yyyy') : t('hero.checkIn')}
+                    </span>
+                  </div>
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto border-primary/20 bg-background/95 p-0" align="start">
+                <Calendar
+                  mode="range"
+                  selected={dateRange}
+                  onSelect={setDateRange}
+                  numberOfMonths={2}
+                  defaultMonth={dateRange?.from}
+                  className="rounded-xl"
+                  classNames={{
+                    day_selected: 'bg-primary text-primary-foreground hover:bg-primary',
+                    day_range_middle: 'aria-selected:bg-primary/20 aria-selected:text-foreground',
+                  }}
+                />
+              </PopoverContent>
+            </Popover>
+
+            <Popover>
+              <PopoverTrigger asChild>
+                <button
+                  className={cn(
+                    'group rounded-xl border border-primary/10 bg-background/80 px-5 py-4 text-left transition hover:border-primary/40',
+                  )}
+                >
+                  <label className="text-xs uppercase tracking-wide text-muted-foreground mb-2 block">
+                    {t('hero.checkOut')}
+                  </label>
+                  <div className="flex items-center gap-3 text-base font-semibold text-foreground">
+                    <CalendarIcon className="h-5 w-5 text-primary" />
+                    <span>
+                      {dateRange?.to ? format(dateRange.to, 'EEE, dd MMM yyyy') : t('hero.checkOut')}
+                    </span>
+                  </div>
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto border-primary/20 bg-background/95 p-0" align="start">
+                <Calendar
+                  mode="range"
+                  selected={dateRange}
+                  onSelect={setDateRange}
+                  numberOfMonths={2}
+                  defaultMonth={dateRange?.from}
+                  className="rounded-xl"
+                  classNames={{
+                    day_selected: 'bg-primary text-primary-foreground hover:bg-primary',
+                    day_range_middle: 'aria-selected:bg-primary/20 aria-selected:text-foreground',
+                  }}
+                />
+              </PopoverContent>
+            </Popover>
+
+            <Popover>
+              <PopoverTrigger asChild>
+                <button
+                  className={cn(
+                    'group rounded-xl border border-primary/10 bg-background/80 px-5 py-4 text-left transition hover:border-primary/40',
+                  )}
+                >
+                  <label className="text-xs uppercase tracking-wide text-muted-foreground mb-2 block">
+                    {t('hero.guestsRooms')}
+                  </label>
+                  <div className="flex items-center gap-3 text-base font-semibold text-foreground">
+                    <Users className="h-5 w-5 text-primary" />
+                    <span>{guests}</span>
+                  </div>
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 border-primary/20 bg-background/95" align="start">
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium text-foreground mb-2 block">Adults</label>
+                    <Select defaultValue="2" onValueChange={(value) => setGuests(`${value} adults · 1 room`)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="2 adults" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="1">1 adult</SelectItem>
+                        <SelectItem value="2">2 adults</SelectItem>
+                        <SelectItem value="3">3 adults</SelectItem>
+                        <SelectItem value="4">4 adults</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-foreground mb-2 block">Rooms</label>
+                    <Select defaultValue="1" onValueChange={(value) => setGuests(`2 adults · ${value} room${value === '1' ? '' : 's'}`)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="1 room" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="1">1 room</SelectItem>
+                        <SelectItem value="2">2 rooms</SelectItem>
+                        <SelectItem value="3">3 rooms</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="rounded-lg border border-primary/20 bg-primary/5 p-3 text-sm text-muted-foreground">
+                    TravelExa teams across Bangladesh provide instant Bengali support for every booking.
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
+
+            <Button size="lg" className="h-full rounded-xl bg-primary px-10 py-4 text-lg font-semibold text-primary-foreground shadow-primary/20 transition hover:bg-primary/90 hover:shadow-lg">
+              {t('hero.searchButton')}
+            </Button>
+          </div>
+        </Card>
 
         <div
           ref={cardsRef}

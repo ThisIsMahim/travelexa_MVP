@@ -14,7 +14,13 @@ export const translations = {
     'hero.titleLine2': 'with TravelExa',
     'hero.subtitle': 'Discover amazing destinations and create unforgettable memories',
     'hero.cta': 'Start Your Journey',
+    'hero.searchHeading': 'Find Hotels in Bangladesh',
+    'hero.searchSubheading': '1,454 verified stays ready for your travel dates',
     'hero.searchPlaceholder': 'Where do you want to go?',
+    'hero.checkIn': 'Check-in',
+    'hero.checkOut': 'Check-out',
+    'hero.guestsRooms': 'Guests & rooms',
+    'hero.searchButton': 'Search',
 
     // Flight Booking
     'flight.title': 'Flight Booking',
@@ -134,7 +140,13 @@ export const translations = {
     'hero.titleLine2': 'TravelExa এর সাথে',
     'hero.subtitle': 'আশ্চর্যজনক গন্তব্য আবিষ্কার করুন এবং অবিস্মরণীয় স্মৃতি তৈরি করুন',
     'hero.cta': 'আপনার যাত্রা শুরু করুন',
+    'hero.searchHeading': 'বাংলাদেশে হোটেল খুঁজুন',
+    'hero.searchSubheading': '১,৪৫৪টি যাচাইকৃত থাকার ব্যবস্থা এখনই আপনার তারিখে প্রস্তুত',
     'hero.searchPlaceholder': 'আপনি কোথায় যেতে চান?',
+    'hero.checkIn': 'চেক-ইন',
+    'hero.checkOut': 'চেক-আউট',
+    'hero.guestsRooms': 'অতিথি ও রুম',
+    'hero.searchButton': 'খুঁজুন',
 
     // Flight Booking
     'flight.title': 'ফ্লাইট বুকিং',
