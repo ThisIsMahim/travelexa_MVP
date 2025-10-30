@@ -1,37 +1,76 @@
+import { useState } from 'react';
 import { useInViewAnimation } from '@/hooks/useInViewAnimation';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Star, MapPin } from 'lucide-react';
+import { Star, MapPin, PhoneCall, CheckCircle2, Building2, CalendarCheck } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from '@/components/ui/dialog';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { ScrollArea } from '@/components/ui/scroll-area';
+
+type HotelInfo = {
+  name: string;
+  location: string;
+  rating: number;
+  price: string;
+  availableRooms: number;
+  weeklyBookings: number;
+  image: string;
+};
+
+const hotels: HotelInfo[] = [
+  {
+    name: 'Dhaka Regency Hotel & Resort',
+    location: 'Dhaka, Bangladesh',
+    rating: 4.6,
+    price: '৳9,800',
+    availableRooms: 18,
+    weeklyBookings: 42,
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2xQej2kiEgjXRVYfSnVwuaZexOalgvjiNSr5jqwXuAKsNza56JF6Tu98cdZVBClmHZ1I&usqp=CAU',
+  },
+  {
+    name: 'Royal Tulip Sea Pearl Beach Resort',
+    location: "Cox's Bazar, Bangladesh",
+    rating: 4.8,
+    price: '৳14,500',
+    availableRooms: 12,
+    weeklyBookings: 56,
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxLzaayjgRqzM_5xLd7N6EuyDM1qhsQgQ3EQ&s',
+  },
+  {
+    name: 'The Palace Luxury Resort',
+    location: 'Habiganj, Sylhet, Bangladesh',
+    rating: 4.7,
+    price: '৳12,200',
+    availableRooms: 9,
+    weeklyBookings: 34,
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ40DnGSiBFM4TqQx39q-m8qjqQFYpyiwtLcw&s',
+  },
+  {
+    name: 'Grand Sultan Tea Resort & Golf',
+    location: 'Sreemangal, Bangladesh',
+    rating: 4.9,
+    price: '৳11,400',
+    availableRooms: 6,
+    weeklyBookings: 27,
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZlRUVMhhZWsX6pp4cTzmgITnI6z6YlRvJ6A&s',
+  },
+];
 
 const HotelShowcase = () => {
   const { t } = useLanguage();
   const { ref: sectionRef, isVisible: sectionVisible } = useInViewAnimation<HTMLElement>();
   const { ref: cardsRef, isVisible: cardsVisible } = useInViewAnimation<HTMLDivElement>();
-
-  const hotels = [
-    {
-      name: 'Grand Plaza Hotel',
-      location: 'Dubai, UAE',
-      rating: 4.8,
-      price: '$180',
-      image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',
-    },
-    {
-      name: 'Ocean View Resort',
-      location: 'Maldives',
-      rating: 4.9,
-      price: '$320',
-      image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80',
-    },
-    {
-      name: 'City Lights Suites',
-      location: 'Singapore',
-      rating: 4.7,
-      price: '$220',
-      image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',
-    },
-  ];
+  const [selectedHotel, setSelectedHotel] = useState<HotelInfo | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
     <section
@@ -90,7 +129,13 @@ const HotelShowcase = () => {
                     <p className="text-xs text-muted-foreground">{t('hotel.pricePerNight')}</p>
                   </div>
                 </div>
-                <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold group-hover:scale-105 smooth-transition glow-effect">
+                <Button
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold group-hover:scale-105 smooth-transition glow-effect"
+                  onClick={() => {
+                    setSelectedHotel(hotel);
+                    setIsDialogOpen(true);
+                  }}
+                >
                   {t('hotel.bookNow')}
                 </Button>
               </div>
@@ -98,6 +143,128 @@ const HotelShowcase = () => {
           ))}
         </div>
       </div>
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="m-0 h-[100dvh] w-[100dvw] max-w-[100dvw] rounded-none border-0 bg-background/95 p-0 shadow-none">
+          {selectedHotel && (
+            <div className="flex h-full min-h-0 flex-col">
+              <ScrollArea type="auto" className="flex-1 min-h-0 bg-gradient-to-b from-primary/5 via-background to-background">
+                <div className="px-6 py-10 sm:px-16 sm:py-14">
+                  <div className="mx-auto w-full max-w-4xl space-y-8">
+                    <DialogHeader className="space-y-3 text-left">
+                      <DialogTitle className="flex items-center gap-3 text-3xl font-bold text-primary">
+                        <CheckCircle2 className="w-6 h-6" /> {t('hotel.modalTitle')}
+                      </DialogTitle>
+                      <DialogDescription className="text-base text-muted-foreground">
+                        {t('hotel.modalSubtitle')}
+                      </DialogDescription>
+                    </DialogHeader>
+
+                    <div className="grid gap-6">
+                      <div className="flex flex-col gap-5 rounded-2xl border border-primary/20 bg-background/80 p-6 shadow-lg sm:flex-row sm:items-center">
+                        <img
+                          src={selectedHotel.image}
+                          alt={selectedHotel.name}
+                          className="h-36 w-full rounded-xl object-cover shadow-md sm:h-40 sm:w-48"
+                        />
+                        <div className="space-y-3">
+                          <p className="text-sm uppercase tracking-wide text-muted-foreground">{t('hotel.modalStay')}</p>
+                          <h3 className="text-2xl font-semibold leading-snug text-foreground">{selectedHotel.name}</h3>
+                          <p className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <MapPin className="h-4 w-4 text-primary" />
+                            <span>
+                              {t('hotel.modalLocation')}: {selectedHotel.location}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="grid gap-4 sm:grid-cols-2">
+                        <div className="rounded-xl border border-border/40 bg-background/70 p-5 shadow-sm">
+                          <p className="text-sm text-muted-foreground">{t('hotel.modalPrice')}</p>
+                          <p className="mt-2 text-2xl font-semibold text-primary">{selectedHotel.price}</p>
+                        </div>
+                        <div className="rounded-xl border border-border/40 bg-background/70 p-5 shadow-sm">
+                          <p className="text-sm text-muted-foreground">{t('hotel.modalRating')}</p>
+                          <p className="mt-2 flex items-center gap-2 text-2xl font-semibold text-foreground">
+                            <Star className="h-5 w-5 text-primary fill-primary" />
+                            {selectedHotel.rating}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="grid gap-4 sm:grid-cols-2">
+                        <div className="rounded-xl border border-primary/20 bg-background/80 p-5 shadow-sm">
+                          <p className="text-sm text-muted-foreground">{t('hotel.modalRooms')}</p>
+                          <p className="mt-2 flex items-center gap-2 text-2xl font-semibold text-foreground">
+                            <Building2 className="h-5 w-5 text-primary" />
+                            {selectedHotel.availableRooms}
+                          </p>
+                        </div>
+                        <div className="rounded-xl border border-primary/20 bg-background/80 p-5 shadow-sm">
+                          <p className="text-sm text-muted-foreground">{t('hotel.modalBookings')}</p>
+                          <p className="mt-2 flex items-center gap-2 text-2xl font-semibold text-foreground">
+                            <CalendarCheck className="h-5 w-5 text-primary" />
+                            {selectedHotel.weeklyBookings}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="rounded-2xl border border-primary/15 bg-background/80 p-6 shadow-sm">
+                        <div className="flex items-center gap-2 text-base font-semibold text-primary">
+                          <CheckCircle2 className="h-5 w-5" /> {t('hotel.modalAvailability')}
+                        </div>
+                        <Separator className="my-4 bg-border/60" />
+                        <div className="flex flex-wrap gap-2">
+                          <Badge variant="outline" className="border-primary/40 bg-primary/10 text-xs font-medium">
+                            {t('hotel.amenity.breakfast')}
+                          </Badge>
+                          <Badge variant="outline" className="border-primary/40 bg-primary/10 text-xs font-medium">
+                            {t('hotel.amenity.freeWifi')}
+                          </Badge>
+                          <Badge variant="outline" className="border-primary/40 bg-primary/10 text-xs font-medium">
+                            {t('hotel.amenity.pickup')}
+                          </Badge>
+                          <Badge variant="outline" className="border-primary/40 bg-primary/10 text-xs font-medium">
+                            {t('hotel.amenity.familyRooms')}
+                          </Badge>
+                          <Badge variant="outline" className="border-primary/40 bg-primary/10 text-xs font-medium">
+                            {t('hotel.amenity.support')}
+                          </Badge>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start gap-3 rounded-2xl border border-primary/15 bg-background/80 p-6 text-sm leading-relaxed text-muted-foreground">
+                        <PhoneCall className="h-5 w-5 flex-shrink-0 text-primary" />
+                        <p>{t('hotel.modalContact')}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ScrollArea>
+
+              <DialogFooter className="flex flex-col gap-3 border-t border-border/60 bg-background/95 px-6 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-16">
+                <p className="text-sm text-muted-foreground">
+                  {selectedHotel.name}
+                </p>
+                <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+                  <Button size="lg" className="w-full sm:w-auto" onClick={() => setIsDialogOpen(false)}>
+                    {t('hotel.modalPrimary')}
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="w-full sm:w-auto"
+                    onClick={() => setIsDialogOpen(false)}
+                  >
+                    {t('hotel.modalSecondary')}
+                  </Button>
+                </div>
+              </DialogFooter>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };
